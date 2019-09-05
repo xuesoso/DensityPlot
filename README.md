@@ -5,4 +5,4 @@ A simple and standalone python plotting package for density and scatter plotting
 
 This package was modified from [FlowCal](https://github.com/taborlab/FlowCal) package.
 
-Check [here](./examples/tutorial.html) for a tutorial on usage.
+Check [here](https://nbviewer.jupyter.org/github/xuesoso/DensityPlot/blob/master/examples/tutorial.ipynb) for a tutorial on usage.
