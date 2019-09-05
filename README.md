@@ -1,4 +1,4 @@
-<img src="Example_scatter.png" width="300">
+<img src="examples/Example_scatter.png" width="300">
 
 # DensityPlot
 A simple and standalone python plotting package for density and scatter plotting commonly used in FACS analysis.
