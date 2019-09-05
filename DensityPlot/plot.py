@@ -63,7 +63,7 @@ def density2d(data_plot,
               title=None,
               filename=None,
               alpha=.1,
-              cmap='Reds',
+              cmap='viridis',
               min_threshold=0.01,
               figsize=(3, 3),
               transparent=False,
@@ -206,7 +206,8 @@ def density2d(data_plot,
         x = np.ravel(xv)[Hind != 0]
         y = np.ravel(yv)[Hind != 0]
         z = np.ravel(H if sH is None else sH)[Hind != 0]
-        artist = ax.scatter(x, y, edgecolor='none', c=z, **kwargs)
+        artist = ax.scatter(x, y, edgecolor='none', c=z, cmap=cmap,
+                            **kwargs)
     elif mode == 'mesh':
         if logz:
             sH = np.log10(sH)
