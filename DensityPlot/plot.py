@@ -45,7 +45,7 @@ class MathTextSciFormatter(mticker.Formatter):
             s =  r'%s%s' % (significand, exponent)
         return "${}$".format(s)
 
-def density2d(data_plot,
+def density2d(data_plot=None,
               ax=None,
               bins=300,
               mode='scatter_mesh',
@@ -71,6 +71,8 @@ def density2d(data_plot,
               mesh_order='top',
               dot_alpha=1,
               dpi=200,
+              x=None,
+              y=None,
               **kwargs):
     """
     ## Modified based on density2d from FlowCal package.
@@ -97,7 +99,8 @@ def density2d(data_plot,
     Parameters
     ----------
     data : numpy array
-        A N x 2 data array to plot.
+        A N x 2 data array to plot. An alternative acceptable input is to
+        define ```x``` and ```y``` values.
     bins : int, optional
         Default value set to 300. Should adjust based on density of the data
         over the entire plane.
@@ -153,6 +156,10 @@ def density2d(data_plot,
         Opacity value for dots in ```scatter_mesh```
     dpi : int, optional
         Resolution of saved figure.
+    x : list or array, optional
+        values for x axis. Ignored if ```data_plot``` is supplied
+    y : list or array, optional
+        values for y axis. Ignored if ```data_plot``` is supplied
     kwargs : dict, optional
         Additional parameters passed directly to the underlying matplotlib
         functions: ``plt.scatter`` if ``mode==scatter``, and
@@ -166,6 +173,12 @@ def density2d(data_plot,
         fig, ax = plt.subplots(figsize=figsize)
     else:
         existing_plot = True
+
+    if data_plot is None:
+        try:
+            data_plot = np.array([x, y]).T
+        except:
+            raise ValueError('You must provide values for either "data_plot" or "x" and "y"')
 
     # Calculate histogram
     H,xe,ye = np.histogram2d(data_plot[:,0], data_plot[:,1], bins=bins)
