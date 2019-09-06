@@ -1,5 +1,6 @@
-<img src="examples/Example_scatter.png" width="300">
-<img src="examples/Example_scatter_biexp.png" width="300">
+<!--<img src="examples/Example_scatter.png" width="300">-->
+<!--<img src="examples/Example_scatter_biexp.png" width="300">-->
+![](examples/Example_scatter.png "Linear scale") ![](examples/Example_scatter_biexp.png "Biexponential scale")
 
 # DensityPlot
 -------------------
