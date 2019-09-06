@@ -108,7 +108,8 @@ def density2d(data_plot=None,
     mode : {'mesh', 'scatter', 'scatter_mesh'}, str, optional
         Plotting mode. 'mesh' produces a 2D-histogram whereas 'scatter'
         produces a scatterplot colored by histogram bin value. 'scatter_mesh'
-        produces a 2D-histogram with scatter dots of the data on top.
+        produces a 2D-histogram with scatter dots of the data on top. 'contour'
+        produces a contour map based on the 2D-histogram.
     normed : bool, optional
         Flag indicating whether to plot a normed histogram (probability
         mass function instead of a counts-based histogram).
@@ -230,32 +231,48 @@ def density2d(data_plot=None,
         x = np.ravel(xv)[Hind != 0]
         y = np.ravel(yv)[Hind != 0]
         z = np.ravel(H if sH is None else sH)[Hind != 0]
+        order = np.argsort(z)
         artist = ax.scatter(x, y, edgecolor='none', c=z, cmap=cmap,
                             **kwargs)
-    elif mode == 'mesh':
+
+    elif mode == 'contour' or mode == 'scatter_mesh' or mode == 'mesh':
+        if smooth:
+            Z = sH
+        else:
+            Z = H
+
         if logz:
-            sH = np.log10(sH)
-            min_mesh_val = np.max(sH) + np.log10(min_threshold)
+            Z = np.log10(Z)
+            min_mesh_val = np.max(Z) + np.log10(min_threshold)
         else:
-            min_mesh_val = np.max(sH)*min_threshold
-        sH[sH <= min_mesh_val] = np.nan
-        artist = ax.pcolormesh(xe, ye, H if sH is None else sH, alpha=alpha,
-                      edgecolors='face', cmap=cmap)
-    elif mode == 'scatter_mesh':
-        if logz:
-            sH = np.log10(sH)
-            min_mesh_val = np.max(sH) + np.log10(min_threshold)
+            min_mesh_val = np.max(Z)*min_threshold
+
+        Z[Z <= min_mesh_val] = np.nan
+
+        if mode == 'contour':
+            xc = (xe[:-1] + xe[1:]) / 2.0   # x-axis bin centers
+            yc = (ye[:-1] + ye[1:]) / 2.0   # y-axis bin centers
+            xx, yy = np.meshgrid(xc, yc)
+            artist = ax.contour(xx, yy, Z, cmap=cmap, **kwargs)
+
+        elif mode == 'scatter_mesh':
+            if mesh_order == 'top':
+                zorder = np.inf
+            else:
+                zorder = 0
+            artist = ax.pcolormesh(xe, ye, H if Z is None else Z, alpha=alpha,
+                                   zorder=zorder, edgecolors='face', cmap=cmap)
+            ax.scatter(data_plot[:, 0], data_plot[:, 1], edgecolor='none',
+                       alpha=dot_alpha, **kwargs)
+
+        elif mode == 'mesh':
+            Z[Z <= min_mesh_val] = np.nan
+            artist = ax.pcolormesh(xe, ye, Z, alpha=alpha,
+                          edgecolors='face', cmap=cmap, **kwargs)
+
         else:
-            min_mesh_val = np.max(sH)*min_threshold
-        sH[sH <= min_mesh_val] = np.nan
-        if mesh_order == 'top':
-            zorder = np.inf
-        else:
-            zorder = 0
-        artist = ax.pcolormesh(xe, ye, H if sH is None else sH, alpha=alpha,
-                               zorder=zorder, edgecolors='face', cmap=cmap)
-        ax.scatter(data_plot[:, 0], data_plot[:, 1], edgecolor='none',
-                   alpha=dot_alpha, **kwargs)
+            raise ValueError("mode {} not recognized".format(mode))
+
     else:
         raise ValueError("mode {} not recognized".format(mode))
 
