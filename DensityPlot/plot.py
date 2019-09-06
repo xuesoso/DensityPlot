@@ -253,7 +253,7 @@ def density2d(data_plot=None,
         cax = divider.append_axes("right", size="5%", pad=0.1)
         cbar = fig.colorbar(artist, cax=cax, )
         if normed:
-            if logz:
+            if logz and mode != 'scatter':
                 cbar.ax.set_title(r'Probability (log$_{10}$)', ha='left')
             else:
                 cbar.ax.set_title('Probability', ha='left')
