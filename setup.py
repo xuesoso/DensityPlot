@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name='DensityPlot',
-    version='0.1.2',
+    version='0.1.4',
     author='YSX',
     author_email='xuesoso@gmail.com',
     packages=setuptools.find_packages(),
