@@ -26,6 +26,9 @@ matplotlib >= 2.0.0
 Modes available
 ---------------
 scatter : A scatterplot colored by the data density. Dense regions are merged into bins. Sparse region is represented by as single dots.
+
 mesh : 2D-histogram colored by the data density in the region
+
 scatter_mesh : 2D-histogram with original data values plotted as dots.
+
 contour : A contour map of the data density. Recommend setting ```smooth``` option as True.
