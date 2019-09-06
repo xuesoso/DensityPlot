@@ -1,4 +1,4 @@
-<img src="examples/Example_scatter.png" width="250"/> <img src="examples/Example_scatter_biexp.png" width="250"/> <img src="examples/Example_contour.png" width="250"/> 
+<img src="examples/Example_scatter.png" width="200"/> <img src="examples/Example_scatter_biexp.png" width="200"/> <img src="examples/Example_contour.png" width="250"/> 
 
 
 # DensityPlot

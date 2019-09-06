@@ -5,12 +5,19 @@ DensityPlot Package Changes Log
 
 Release Summary:
 
+0.1.5, September 6, 2013
+    Updated the package to include logicle / bioexponential plotting of data.
+
 0.1.4, September 6, 2013
     Updated the package to include logicle / bioexponential plotting of data.
 
 Details of each release follow, from most recent to oldest.
 
 -------------------------------------------------------------------------------------
+
+Release 0.1.5, September 6, 2019
+
+Added "contour" mode
 
 Release 0.1.4, September 6, 2019
 
