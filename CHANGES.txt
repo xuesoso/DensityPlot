@@ -12,21 +12,6 @@ Details of each release follow, from most recent to oldest.
 
 -------------------------------------------------------------------------------------
 
-Release 1.4, October 14, 2013
+Release 0.1.4, September 6, 2019
 
-Updated for running book examples under Python 3.3 and earlier 
-in the 3.X line.  Minor code changes, but includes backward
-compatible 3.3 patches, plus instructions for 3.3 users:
-
-1) [Windows only] Set PY_PYTHON=3 for new Windows launcher
-2) [Windows only] Fix #! lines unrecognized by new Windows launcher
-3) Install 2-file PyMailGUI patch required for 3.3 email package change
-4) Install the Pillow drop-in replacement for the PIL image library
-
-For more on changes applied in examples package 1.4 and required by 
-Python 3.3, see README-PP4E-PY33.html here and available online at:
-
-     http://www.rmi.net/~lutz/README-PP4E-PY33.html
-
-Also added new website snapshot files in changes/book-web-site,
-and new runs of code admin scripts in changes/detailed-diffs.
+Added the option to plot on bioexponential scale ('logicle' implementation originally from FlowCal package)
