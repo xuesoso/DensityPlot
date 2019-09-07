@@ -79,23 +79,25 @@ def density2d(data_plot=None,
     ## Modified based on density2d from FlowCal package.
     Plot a 2D density plot from two channels of a flow cytometry data set.
 
-    `density2d` has three plotting modes which are selected using the `mode`
+    `density2d` has four plotting modes which are selected using the `mode`
     argument. With ``mode=='mesh'``, this function plots the data as a true
     2D histogram, in which a plane is divided into bins and the color of
     each bin is directly related to the number of elements therein. With
-    ``mode=='scatter'``, this function also calculates a 2D histogram,
-    but it plots a 2D scatter plot in which each dot corresponds to a bin,
-    colored according to the number elements therein. The most important
-    difference is that the ``scatter`` mode does not color regions
-    corresponding to empty bins. This allows for easy identification of
-    regions with low number of events. With ``mode=='scatter_mesh'``, this
-    function will first generate 2D histogram and plot it on a mesh, then will
-    plot all the data as scatter dots underneath. For all modes, the calculated
-    histogram can be smoothed using a Gaussian kernel by specifying
-    ``smooth=True``. The width of the kernel is, in this case, given by
-    `sigma`. By default, bin with z-value below the minimal threshold will not
-    be plotted with a color in order to prevent obscuring of the data. The
-    threshold can be adjusted by changing the value of ``min_threshold``.
+    ``mode=='contour'``, this function plots the data as a contour map based on
+    the 2D histogram of the data values. With ``mode=='scatter'``, this
+    function also calculates a 2D histogram, but it plots a 2D scatter plot in
+    which each dot corresponds to a bin, colored according to the number
+    elements therein. The most important difference is that the ``scatter``
+    mode does not color regions corresponding to empty bins. This allows for
+    easy identification of regions with low number of events. With
+    ``mode=='scatter_mesh'``, this function will first generate 2D histogram
+    and plot it on a mesh, then will plot all the data as scatter dots
+    underneath. For all modes, the calculated histogram can be smoothed using
+    a Gaussian kernel by specifying ``smooth=True``. The width of the kernel
+    is, in this case, given by `sigma`. By default, bin with z-value below the
+    minimal threshold will not be plotted with a color in order to prevent
+    obscuring of the data. The threshold can be adjusted by changing the value
+    of ``min_threshold``.
 
     Parameters
     ----------

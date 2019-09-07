@@ -1,5 +1,6 @@
 <img src="examples/Example_scatter.png" width="220"/> <img src="examples/Example_scatter_biexp.png" width="220"/> <img src="examples/Example_contour.png" width="250"/> 
 
+<img src="examples/mouse_cell_density_atlas.png" width="500"/> 
 
 # DensityPlot
 -------------------
