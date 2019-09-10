@@ -5,15 +5,22 @@ DensityPlot Package Changes Log
 
 Release Summary:
 
-0.1.5, September 6, 2013
+0.1.6, September 10, 2019
+    Added "alpha" setting for "scatter" mode
+
+0.1.5, September 6, 2019
     Updated the package to include logicle / bioexponential plotting of data.
 
-0.1.4, September 6, 2013
+0.1.4, September 6, 2019
     Updated the package to include logicle / bioexponential plotting of data.
 
 Details of each release follow, from most recent to oldest.
 
 -------------------------------------------------------------------------------------
+
+Release 0.1.5, September 6, 2019
+
+Added "alpha" setting for "scatter" mode
 
 Release 0.1.5, September 6, 2019
 

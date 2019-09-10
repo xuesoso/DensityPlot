@@ -74,7 +74,6 @@ def density2d(data_plot=None,
               dpi=200,
               x=None,
               y=None,
-              alpha=1,
               **kwargs):
     """
     ## Modified based on density2d from FlowCal package.
