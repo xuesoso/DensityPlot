@@ -74,6 +74,7 @@ def density2d(data_plot=None,
               dpi=200,
               x=None,
               y=None,
+              alpha=1,
               **kwargs):
     """
     ## Modified based on density2d from FlowCal package.
@@ -235,7 +236,7 @@ def density2d(data_plot=None,
         z = np.ravel(H if sH is None else sH)[Hind != 0]
         order = np.argsort(z)
         artist = ax.scatter(x, y, edgecolor='none', c=z, cmap=cmap,
-                            **kwargs)
+                            alpha=alpha, **kwargs)
 
     elif mode == 'contour' or mode == 'scatter_mesh' or mode == 'mesh':
         if smooth:
