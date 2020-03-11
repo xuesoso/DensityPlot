@@ -5,6 +5,9 @@ DensityPlot Package Changes Log
 
 Release Summary:
 
+0.1.7, March 10, 2020
+    Fixed a matplotlib axis scaling bug. Added compatibility to use pandas dataframe instead. Changed default parameters to be more sensible.
+
 0.1.6, September 10, 2019
     Added "alpha" setting for "scatter" mode
 
@@ -18,7 +21,11 @@ Details of each release follow, from most recent to oldest.
 
 -------------------------------------------------------------------------------------
 
-Release 0.1.5, September 6, 2019
+Release 0.1.7, March 10, 2020
+
+Fixed a matplotlib axis scaling bug. Added compatibility to use pandas dataframe instead. Changed default parameters to be more sensible.
+
+Release 0.1.6, September 10, 2019
 
 Added "alpha" setting for "scatter" mode
 

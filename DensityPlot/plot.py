@@ -1,4 +1,8 @@
 import numpy as np
+try:
+    import pandas as pd
+except ImportError:
+    pass
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from mpl_toolkits import axes_grid1
@@ -46,10 +50,10 @@ class MathTextSciFormatter(mticker.Formatter):
             s =  r'%s%s' % (significand, exponent)
         return "${}$".format(s)
 
-def density2d(data_plot=None,
+def density2d(data=None,
               ax=None,
               bins=300,
-              mode='scatter_mesh',
+              mode='scatter',
               normed=False,
               smooth=True,
               logz=True,
@@ -63,7 +67,7 @@ def density2d(data_plot=None,
               ylim=None,
               title=None,
               filename=None,
-              alpha=.1,
+              alpha=1,
               cmap='viridis',
               min_threshold=0.01,
               figsize=(3, 3),
@@ -74,6 +78,8 @@ def density2d(data_plot=None,
               dpi=200,
               x=None,
               y=None,
+              s=10,
+              data_plot=None,
               **kwargs):
     """
     ## Modified based on density2d from FlowCal package.
@@ -161,9 +167,9 @@ def density2d(data_plot=None,
     dpi : int, optional
         Resolution of saved figure.
     x : list or array, optional
-        values for x axis. Ignored if ```data_plot``` is supplied
+        values for x axis. Ignored if ```data``` is supplied
     y : list or array, optional
-        values for y axis. Ignored if ```data_plot``` is supplied
+        values for y axis. Ignored if ```data``` is supplied
     kwargs : dict, optional
         Additional parameters passed directly to the underlying mpl
         functions: ``plt.scatter`` if ``mode==scatter``, and
@@ -188,14 +194,30 @@ def density2d(data_plot=None,
             new_ylim = [ax.get_ylim()[0], ax.get_ylim()[1]]
             add_range = np.array([new_xlim, new_ylim]).T
 
-    if data_plot is None:
+    if data_plot is not None:
+        warnings.warn(
+            '"data_plot" is deprecated, use "data" instead',
+            DeprecationWarning
+        )
+        data = data_plot
+
+    if data is None:
         try:
-            data_plot = np.array([x, y]).T
+            data = np.array([x, y]).T
         except:
-            raise ValueError('You must provide values for either "data_plot" or "x" and "y"')
+            raise ValueError('You must provide values for either "data" or "x" and "y"')
+    else:
+        if isinstance(data, pd.DataFrame):
+            assert x in data.columns, '"x" must be in the column of "data"'
+            assert y in data.columns, '"y" must be in the column of "data"'
+            if xlabel is None:
+                xlabel = x
+            if ylabel is None:
+                ylabel = y
+            data = data[[x, y]].values
 
     # Calculate histogram
-    H,xe,ye = np.histogram2d(data_plot[:,0], data_plot[:,1], bins=bins)
+    H,xe,ye = np.histogram2d(data[:,0], data[:,1], bins=bins)
 
     # Smooth
     if smooth:
@@ -235,7 +257,7 @@ def density2d(data_plot=None,
         z = np.ravel(H if sH is None else sH)[Hind != 0]
         order = np.argsort(z)
         artist = ax.scatter(x, y, edgecolor='none', c=z, cmap=cmap,
-                            alpha=alpha, **kwargs)
+                            alpha=alpha, s=s, **kwargs)
 
     elif mode == 'contour' or mode == 'scatter_mesh' or mode == 'mesh':
         if smooth:
@@ -264,8 +286,8 @@ def density2d(data_plot=None,
                 zorder = 0
             artist = ax.pcolormesh(xe, ye, H if Z is None else Z, alpha=alpha,
                                    zorder=zorder, edgecolors='face', cmap=cmap)
-            ax.scatter(data_plot[:, 0], data_plot[:, 1], edgecolor='none',
-                       alpha=dot_alpha, **kwargs)
+            ax.scatter(data[:, 0], data[:, 1], edgecolor='none',
+                       alpha=dot_alpha, s=s, **kwargs)
 
         elif mode == 'mesh':
             Z[Z <= min_mesh_val] = np.nan
@@ -305,20 +327,20 @@ def density2d(data_plot=None,
 
     if xscale == 'logicle':
         if existing_plot:
-            combined = np.concatenate([data_plot, add_range])
+            combined = np.concatenate([data, add_range])
             ax.set_xscale(xscale, data=combined, channel=0)
         else:
-            ax.set_xscale(xscale, data=data_plot, channel=0)
+            ax.set_xscale(xscale, data=data, channel=0)
     else:
         ax.set_xscale(xscale)
     if yscale == 'logicle':
         if existing_plot:
-            combined = np.concatenate([data_plot, add_range])
+            combined = np.concatenate([data, add_range])
             ax.set_yscale(yscale, data=combined, channel=1)
         else:
-            ax.set_yscale(yscale, data=data_plot, channel=1)
+            ax.set_yscale(yscale, data=data, channel=1)
     else:
-        ax.set_yscale(yscale, data=data_plot)
+        ax.set_yscale(yscale, data=data)
 
     # x and y limits
     if xlim is not None:
@@ -850,7 +872,7 @@ class _LogicleScale(mpl.scale.ScaleBase):
 
     def __init__(self, axis, **kwargs):
         # Run parent's constructor
-        mpl.scale.ScaleBase.__init__(self)
+        mpl.scale.ScaleBase.__init__(self, axis)
         # Initialize and store logicle transform object
         self._transform = _LogicleTransform(**kwargs)
 
