@@ -5,6 +5,9 @@ DensityPlot Package Changes Log
 
 Release Summary:
 
+0.1.8, August 17, 2020
+    Fixed yscale issue.
+
 0.1.7, March 10, 2020
     Fixed a matplotlib axis scaling bug. Added compatibility to use pandas dataframe instead. Changed default parameters to be more sensible.
 
@@ -20,6 +23,10 @@ Release Summary:
 Details of each release follow, from most recent to oldest.
 
 -------------------------------------------------------------------------------------
+
+Release 0.1.8, August 17, 2020
+
+Fixed yscale issue.
 
 Release 0.1.7, March 10, 2020
 
