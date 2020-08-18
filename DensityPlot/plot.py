@@ -340,7 +340,7 @@ def density2d(data=None,
         else:
             ax.set_yscale(yscale, data=data, channel=1)
     else:
-        ax.set_yscale(yscale, data=data)
+        ax.set_yscale(yscale)
 
     # x and y limits
     if xlim is not None:
