@@ -78,6 +78,8 @@ def density2d(data=None,
               dpi=200,
               x=None,
               y=None,
+              z=None,
+              z_weight=None,
               s=10,
               data_plot=None,
               **kwargs):
@@ -170,6 +172,11 @@ def density2d(data=None,
         values for x axis. Ignored if ```data``` is supplied
     y : list or array, optional
         values for y axis. Ignored if ```data``` is supplied
+    z : list or array, optional
+        the column key to use as weights for Z-axis. Only used when data is DataFrame.
+        use "z_weight" instead if you want to provide a vector of weights instead.
+    z_weight : list or array, optional
+        values to weigh the Z axis.
     kwargs : dict, optional
         Additional parameters passed directly to the underlying mpl
         functions: ``plt.scatter`` if ``mode==scatter``, and
@@ -210,6 +217,9 @@ def density2d(data=None,
         if isinstance(data, pd.DataFrame):
             assert x in data.columns, '"x" must be in the column of "data"'
             assert y in data.columns, '"y" must be in the column of "data"'
+            if z is not None:
+                assert z in data.columns, '"z" must be in the column of "data"'
+                z_weight = data[z].values
             if xlabel is None:
                 xlabel = x
             if ylabel is None:
@@ -217,7 +227,7 @@ def density2d(data=None,
             data = data[[x, y]].values
 
     # Calculate histogram
-    H,xe,ye = np.histogram2d(data[:,0], data[:,1], bins=bins)
+    H, xe, ye = np.histogram2d(data[:,0], data[:,1], bins=bins, weights=z_weight)
 
     # Smooth
     if smooth:
@@ -303,6 +313,7 @@ def density2d(data=None,
     if colorbar:
         divider = make_axes_locatable(ax)
         cax = divider.append_axes("right", size="5%", pad=0.1)
+        fig = ax.get_figure()
         cbar = fig.colorbar(artist, cax=cax, )
         if normed:
             if logz and mode != 'scatter':
